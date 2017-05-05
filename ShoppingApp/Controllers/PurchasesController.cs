@@ -1,10 +1,12 @@
 ﻿using ShoppingApp.Models;
 using ShoppingApp.Repositories;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Web.Http;
 
 namespace ShoppingApp.Controllers
 {
+    [DataContract(IsReference = true)]
     public class PurchasesController : ApiController
     {
         private IRepository<Purchase> repository;

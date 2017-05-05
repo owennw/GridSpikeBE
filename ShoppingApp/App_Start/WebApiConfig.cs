@@ -30,7 +30,7 @@ namespace ShoppingApp
 
             var jsonFormatter = config.Formatters.JsonFormatter;
             jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-            jsonFormatter.SerializerSettings.PreserveReferencesHandling = PreserveReferencesHandling.All;
+            jsonFormatter.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             jsonFormatter.UseDataContractJsonSerializer = false;
         }
     }

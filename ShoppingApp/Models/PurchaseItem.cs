@@ -6,6 +6,11 @@
         public virtual Product Product { get; set; }
         public virtual int Quantity { get; set; }
 
+        public decimal Price
+        {
+            get { return this.Product.Price * this.Quantity; }
+        }
+
         public override bool Equals(object obj)
         {
             var other = obj as PurchaseItem;

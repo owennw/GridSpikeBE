@@ -5,7 +5,8 @@
 >
   <class name="Customer" lazy="false">
     <id name="Id" />
-    <property name="Name" />
+    <property name="FirstName" column="first_name" />
+    <property name="LastName" column="last_name" />
     <property name="EmailAddress" column="email_address" />
     <bag name="Purchases" table="purchase" lazy="false">
       <key column="customer_id" />

@@ -6,5 +6,6 @@
   <class name="Purchase">
     <id name="Id" />
     <many-to-one name="Customer" class="Customer" column="customer_id" lazy="false" />
+    <property name="Date" />
   </class>
 </hibernate-mapping>

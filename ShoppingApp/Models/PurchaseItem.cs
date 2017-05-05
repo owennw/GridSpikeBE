@@ -5,7 +5,6 @@
         public virtual Purchase Purchase { get; set; }
         public virtual Product Product { get; set; }
         public virtual int Quantity { get; set; }
-        public virtual decimal Price { get; set; }
 
         public override bool Equals(object obj)
         {

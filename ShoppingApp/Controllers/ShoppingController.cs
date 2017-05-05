@@ -9,6 +9,7 @@ namespace ShoppingApp.Controllers
 {
     public class Shopping
     {
+        public Purchase Purchase { get; set; }
         public Customer Customer { get; set; }
         public DateTime Date { get; set; }
         public int NumberOfItems { get; set; }
@@ -36,10 +37,11 @@ namespace ShoppingApp.Controllers
                 var purchaseItems = allPurchaseItems.Where(pi => pi.Purchase.Id == p.Id);
                 return new Shopping
                 {
+                    Purchase = p,
                     Customer = p.Customer,
                     Date = p.Date,
                     NumberOfItems = purchaseItems.Sum(pi => pi.Quantity),
-                    TotalCost = purchaseItems.Sum(pi => pi.Price),
+                    TotalCost = purchaseItems.Sum(pi => pi.Product.Price * pi.Quantity),
                 };
             });
         }

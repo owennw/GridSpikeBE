@@ -3,6 +3,7 @@ CREATE DATABASE shopping_app;
 CREATE TABLE `shopping_app`.`product` (
     `id` INT NOT NULL,
     `name` VARCHAR(45) NOT NULL,
+    `price` DECIMAL(10,2) NOT NULL,
     PRIMARY KEY (`id`)
 );
   
@@ -29,7 +30,6 @@ CREATE TABLE `shopping_app`.`purchase_item` (
     `purchase_id` INT NOT NULL,
     `product_id` INT NOT NULL,
     `quantity` INT NOT NULL,
-    `price` DECIMAL(10,2) NOT NULL,
     PRIMARY KEY (`purchase_id, product_id`),
     INDEX `fk_product_idx` (`product_id` ASC),
     CONSTRAINT `fk_purchase` FOREIGN KEY (`purchase_id`)

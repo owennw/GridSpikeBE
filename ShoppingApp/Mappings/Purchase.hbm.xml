@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="ShoppingApp"
+                   namespace="ShoppingApp.Models"
+>
+  <class name="Purchase">
+    <id name="Id" />
+    <many-to-one name="Customer" class="Customer" column="customer_id" lazy="false" />
+  </class>
+</hibernate-mapping>

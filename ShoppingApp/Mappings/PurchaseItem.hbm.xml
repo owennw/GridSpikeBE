@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="ShoppingApp"
+                   namespace="ShoppingApp.Models"
+>
+  <class name="PurchaseItem" table="purchase_item" lazy="false">
+    <composite-id>
+      <key-many-to-one name="Purchase" foreign-key="Purchase" class="Purchase" column="purchase_id" lazy="false" />
+      <key-many-to-one name="Product" foreign-key="Product" class="Product" column="product_id" lazy="false" />
+    </composite-id>
+    <property name="Quantity" />
+    <property name="Price" />
+  </class>
+</hibernate-mapping>

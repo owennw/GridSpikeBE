@@ -12,7 +12,13 @@ CREATE TABLE `shopping_app`.`customer` (
     `first_name` VARCHAR(45) NOT NULL,
     `last_name` VARCHAR(45) NOT NULL,
     `email_address` VARCHAR(45) NOT NULL,
+	`city` VARCHAR(45) NULL,
+	`favourite_food_id` INT NULL,
     PRIMARY KEY (`id`)
+	INDEX `fk_product_idx` (`favourite_food_id` ASC),
+	CONSTRAINT `fk_favourite_food` FOREIGN KEY (`favourite_food_id`)
+		REFERENCES `shopping_app`.`product` (`id`)
+		ON DELETE NO ACTION ON UPDATE NO ACTION
 );
   
 CREATE TABLE `shopping_app`.`purchase` (

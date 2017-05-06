@@ -8,6 +8,8 @@
     <property name="FirstName" column="first_name" />
     <property name="LastName" column="last_name" />
     <property name="EmailAddress" column="email_address" />
+    <property name="City" />
+    <many-to-one name="FavouriteFood" column="favourite_food_id" lazy="false" />
     <bag name="Purchases" table="purchase" lazy="false">
       <key column="customer_id" />
       <one-to-many class="Purchase"/>

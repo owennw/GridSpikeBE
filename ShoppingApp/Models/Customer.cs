@@ -17,6 +17,10 @@ namespace ShoppingApp.Models
 
         public virtual IList<Purchase> Purchases { get; set; }
 
+        public virtual string City { get; set; }
+
+        public virtual Product FavouriteFood { get; set; }
+
         public string Name
         {
             get { return $"{this.FirstName} {this.LastName}"; }

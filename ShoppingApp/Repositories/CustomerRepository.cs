@@ -10,9 +10,13 @@ namespace ShoppingApp.Repositories
         {
             using (ISession session = NHibernateHelper.OpenSession())
             {
+                IEnumerable<Purchase> purchases = null;
+                Product favouriteFood = null;
+
                 return session
                     .QueryOver<Customer>()
-                    .JoinQueryOver<Purchase>(c => c.Purchases)
+                    .JoinAlias(c => c.Purchases, () => purchases)
+                    .Left.JoinAlias(c => c.FavouriteFood, () => favouriteFood)
                     .List();
             }
         }

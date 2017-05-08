@@ -1,7 +1,5 @@
 ﻿using Microsoft.Owin.Hosting;
-using Serilog;
 using System;
-using System.Net.Http;
 
 namespace ShoppingApp
 {

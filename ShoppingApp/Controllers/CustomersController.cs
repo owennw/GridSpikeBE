@@ -13,12 +13,12 @@ namespace ShoppingApp.Controllers
 
         public CustomersController()
         {
-            this.repository = new CustomerRepository();
+                this.repository = new CustomerRepository();
         }
 
         public IEnumerable<Customer> GetAllCustomers()
         {
-            return this.repository.GetAll().Distinct(); // Distinct hack?
+                return this.repository.GetAll().Distinct(); // Distinct hack?
         }
 
         public IHttpActionResult GetCustomer(int id)
@@ -38,6 +38,7 @@ namespace ShoppingApp.Controllers
             try
             {
                 this.repository.Add(customer);
+
                 return Ok(customer);
             }
             catch (Exception e)
@@ -51,6 +52,7 @@ namespace ShoppingApp.Controllers
             try
             {
                 this.repository.Delete(customer);
+
                 return Ok(customer);
             }
             catch (Exception e)

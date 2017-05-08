@@ -13,7 +13,7 @@ namespace ShoppingApp
             // Web API configuration and services
 
             var cors = new EnableCorsAttribute("http://localhost:8080", "*", "*");
-            cors.SupportsCredentials = true;
+            //cors.SupportsCredentials = true;
             config.EnableCors(cors);
 
             // Web API routes

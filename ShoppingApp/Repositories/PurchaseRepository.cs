@@ -1,6 +1,7 @@
 ﻿using NHibernate;
 using ShoppingApp.Models;
 using System.Collections.Generic;
+using System;
 
 namespace ShoppingApp.Repositories
 {
@@ -10,7 +11,12 @@ namespace ShoppingApp.Repositories
         {
             using (ISession session = NHibernateHelper.OpenSession())
             {
-                return session.QueryOver<Purchase>().List();
+                IEnumerable<PurchaseItem> purchaseItems = null;
+
+                return session
+                    .QueryOver<Purchase>()
+                    .JoinAlias(p => p.PurchaseItems, () => purchaseItems)
+                    .List();
             }
         }
 
@@ -20,6 +26,16 @@ namespace ShoppingApp.Repositories
             {
                 return session.Get<Purchase>(id);
             }
+        }
+
+        public void Add(Purchase purchase)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Delete(Purchase purchase)
+        {
+            throw new NotImplementedException();
         }
     }
 }

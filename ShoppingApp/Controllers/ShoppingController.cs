@@ -29,7 +29,7 @@ namespace ShoppingApp.Controllers
 
         public IEnumerable<Shopping> GetAllShopping()
         {
-            var purchases = this.purchaseRepository.GetAll();
+            var purchases = this.purchaseRepository.GetAll().Distinct(); // Distinct hack
             var allPurchaseItems = this.purchaseItemRepository.GetAll();
 
             return purchases.Select(p =>

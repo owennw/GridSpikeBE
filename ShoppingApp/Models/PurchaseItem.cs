@@ -2,6 +2,7 @@
 {
     public class PurchaseItem
     {
+        public virtual int Id { get; set; }
         public virtual Purchase Purchase { get; set; }
         public virtual Product Product { get; set; }
         public virtual int Quantity { get; set; }

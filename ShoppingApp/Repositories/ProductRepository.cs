@@ -1,6 +1,7 @@
 ﻿using NHibernate;
 using ShoppingApp.Models;
 using System.Collections.Generic;
+using System;
 
 namespace ShoppingApp.Repositories
 {
@@ -20,6 +21,16 @@ namespace ShoppingApp.Repositories
             {
                 return session.Get<Product>(id);
             }
+        }
+
+        public void Add(Product product)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Delete(Product product)
+        {
+            throw new NotImplementedException();
         }
     }
 }

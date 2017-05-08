@@ -4,8 +4,14 @@
                    namespace="ShoppingApp.Models"
 >
   <class name="Purchase">
-    <id name="Id" />
+    <id name="Id">
+      <generator class="increment" />
+    </id>
     <many-to-one name="Customer" class="Customer" column="customer_id" lazy="false" />
     <property name="Date" />
+    <bag name="PurchaseItems" table="purchase_item" lazy="false" inverse="true" cascade="all-delete-orphan">
+      <key column="purchase_id" />
+      <one-to-many class="PurchaseItem" />
+    </bag>
   </class>
 </hibernate-mapping>

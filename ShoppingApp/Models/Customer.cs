@@ -7,10 +7,8 @@ namespace ShoppingApp.Models
     {
         public virtual int Id { get; set; }
 
-        [JsonIgnore]
         public virtual string FirstName { get; set; }
 
-        [JsonIgnore]
         public virtual string LastName { get; set; }
 
         public virtual string EmailAddress { get; set; }
@@ -20,10 +18,5 @@ namespace ShoppingApp.Models
         public virtual string City { get; set; }
 
         public virtual Product FavouriteFood { get; set; }
-
-        public string Name
-        {
-            get { return $"{this.FirstName} {this.LastName}"; }
-        }
     }
 }

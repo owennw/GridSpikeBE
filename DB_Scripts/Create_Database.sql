@@ -33,10 +33,11 @@ CREATE TABLE `shopping_app`.`purchase` (
 );
     
 CREATE TABLE `shopping_app`.`purchase_item` (
+    `id` INT NOT NULL,
     `purchase_id` INT NOT NULL,
     `product_id` INT NOT NULL,
     `quantity` INT NOT NULL,
-    PRIMARY KEY (`purchase_id, product_id`),
+    PRIMARY KEY (`id`),
     INDEX `fk_product_idx` (`product_id` ASC),
     CONSTRAINT `fk_purchase` FOREIGN KEY (`purchase_id`)
         REFERENCES `shopping_app`.`purchase` (`id`)

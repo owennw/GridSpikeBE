@@ -1,8 +1,9 @@
 ﻿using ShoppingApp.Models;
 using ShoppingApp.Repositories;
+using System;
 using System.Collections.Generic;
-using System.Web.Http;
 using System.Linq;
+using System.Web.Http;
 
 namespace ShoppingApp.Controllers
 {
@@ -29,6 +30,33 @@ namespace ShoppingApp.Controllers
             }
 
             return Ok(customer);
+        }
+
+        [AcceptVerbs("POST", "PUT")]
+        public IHttpActionResult Add(Customer customer)
+        {
+            try
+            {
+                this.repository.Add(customer);
+                return Ok(customer);
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
+        }
+
+        public IHttpActionResult Delete(Customer customer)
+        {
+            try
+            {
+                this.repository.Delete(customer);
+                return Ok(customer);
+            }
+            catch (Exception e)
+            {
+                return InternalServerError(e);
+            }
         }
     }
 }

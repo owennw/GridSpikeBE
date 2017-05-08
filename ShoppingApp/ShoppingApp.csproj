@@ -152,6 +152,7 @@
     <Compile Include="Controllers\ShopController.cs" />
     <Compile Include="Controllers\ShoppingController.cs" />
     <Compile Include="Hubs\CustomerHub.cs" />
+    <Compile Include="Hubs\FilteredCamelCasePropertyNamesContractResolver.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Purchase.cs" />

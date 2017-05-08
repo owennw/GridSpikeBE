@@ -1,16 +1,16 @@
+INSERT INTO `shopping_app`.`product` (`id`, `name`, `price`) VALUES ('1', 'Banana', '0.27');
+INSERT INTO `shopping_app`.`product` (`id`, `name`, `price`) VALUES ('2', 'Apple', '0.14');
+INSERT INTO `shopping_app`.`product` (`id`, `name`, `price`) VALUES ('3', 'Bacon', '3.49');
+INSERT INTO `shopping_app`.`product` (`id`, `name`, `price`) VALUES ('4', 'Coca Cola', '0.80');
+INSERT INTO `shopping_app`.`product` (`id`, `name`, `price`) VALUES ('5', 'Salmon', '5.49');
+INSERT INTO `shopping_app`.`product` (`id`, `name`, `price`) VALUES ('6', 'Tofu', '4.49');
+INSERT INTO `shopping_app`.`product` (`id`, `name`, `price`) VALUES ('7', 'Coriander', '0.79');
+INSERT INTO `shopping_app`.`product` (`id`, `name`, `price`) VALUES ('8', 'Olive Oil', '5.99');
+INSERT INTO `shopping_app`.`product` (`id`, `name`, `price`) VALUES ('9', 'Bread', '1.29');
+
 INSERT INTO `shopping_app`.`customer` (`id`, `first_name`, `last_name`, `email_address`, `city`, `favourite_food_id`) VALUES ('1', 'Nick', 'Owen', 'nowen@scottlogic.com', null, null);
 INSERT INTO `shopping_app`.`customer` (`id`, `first_name`, `last_name`, `email_address`, `city`, `favourite_food_id`) VALUES ('2', 'Paul', 'Williams', 'pwilliams@scottlogic.com', null, null);
 INSERT INTO `shopping_app`.`customer` (`id`, `first_name`, `last_name`, `email_address`, `city`, `favourite_food_id`) VALUES ('3', 'Sam', 'Perridge', 'sperridge@scottlogic.com', null, null);
-
-INSERT INTO `shopping_app`.`product` (`id`, `name`) VALUES ('1', 'Banana', '0.27');
-INSERT INTO `shopping_app`.`product` (`id`, `name`) VALUES ('2', 'Apple', '0.14');
-INSERT INTO `shopping_app`.`product` (`id`, `name`) VALUES ('3', 'Bacon', '3.49');
-INSERT INTO `shopping_app`.`product` (`id`, `name`) VALUES ('4', 'Coca Cola', '0.80');
-INSERT INTO `shopping_app`.`product` (`id`, `name`) VALUES ('5', 'Salmon', '5.49');
-INSERT INTO `shopping_app`.`product` (`id`, `name`) VALUES ('6', 'Tofu', '4.49');
-INSERT INTO `shopping_app`.`product` (`id`, `name`) VALUES ('7', 'Coriander', '0.79');
-INSERT INTO `shopping_app`.`product` (`id`, `name`) VALUES ('8', 'Olive Oil', '5.99');
-INSERT INTO `shopping_app`.`product` (`id`, `name`) VALUES ('9', 'Bread', '1.29');
 
 INSERT INTO `shopping_app`.`purchase` (`id`, `customer_id`, `date`) VALUES ('1', '1', '2017-05-05 09:15:26');
 INSERT INTO `shopping_app`.`purchase` (`id`, `customer_id`, `date`) VALUES ('2', '1', '2017-05-03 20:07:00');

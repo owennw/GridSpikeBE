@@ -61,16 +61,7 @@ namespace ShoppingApp.Controllers
                 filteredCustomers = query(filteredCustomers);
             }
 
-            if (filteredCustomers.Any())
-            {
-                return Ok(filteredCustomers);
-            }
-            else
-            {
-                return NotFound();
-            }
+            return Ok(filteredCustomers);
         }
-
-
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace ShoppingApp.Models
 {
-    public class PurchaseItem
+    public class PurchaseItem: IEntity
     {
         public virtual int Id { get; set; }
         public virtual Purchase Purchase { get; set; }

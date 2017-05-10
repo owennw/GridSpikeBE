@@ -1,11 +1,35 @@
 ﻿using ShoppingApp.Models;
 using ShoppingApp.Repositories;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Web.Http;
 
 namespace ShoppingApp.Controllers
 {
+    public class QueryManager<T> where T : IEntity
+    {
+        private IDictionary<string, string> queryDict;
+
+        public QueryManager(IDictionary<string, string> queryDict)
+        {
+            this.queryDict = queryDict;
+            this.Queries = new List<Func<IEnumerable<T>, IEnumerable<T>>>();
+        }
+
+        public IList<Func<IEnumerable<T>, IEnumerable<T>>> Queries { get; private set; }
+
+        public void Add(string key, Func<T, string> selector)
+        {
+            string value = null;
+            if (this.queryDict.TryGetValue(key, out value))
+            {
+                this.Queries.Add(cs => cs.Where(c => selector(c).ToLowerInvariant().Contains(value.ToLowerInvariant())));
+            }
+        }
+    }
+
     public class CustomerSearchController : ApiController
     {
         private IRepository<Customer> repository;
@@ -18,22 +42,35 @@ namespace ShoppingApp.Controllers
         [HttpGet]
         public IHttpActionResult Search()
         {
-            var queryStringKeyValuePairs = this.Request.GetQueryNameValuePairs().ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+            var queryDict = this.Request.GetQueryNameValuePairs().ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
 
-            var nameSearch = queryStringKeyValuePairs["query"];
+            var queryManager = new QueryManager<Customer>(queryDict);
 
-            var customers = this.repository.GetAll()
-                .Distinct()
-                .Where(c => c.FirstName.Contains(nameSearch) || c.LastName.Contains(nameSearch));
+            queryManager.Add("first_name", c => c.FirstName);
+            queryManager.Add("last_name", c => c.LastName);
+            queryManager.Add("city", c => c.City);
+            queryManager.Add("email_address", c => c.EmailAddress);
 
-            if (customers.Any())
+            var allCustomers = this.repository.GetAll()
+                .Distinct();
+
+            var filteredCustomers = allCustomers;
+
+            foreach (var query in queryManager.Queries)
             {
-                return Ok(customers);
+                filteredCustomers = query(filteredCustomers);
+            }
+
+            if (filteredCustomers.Any())
+            {
+                return Ok(filteredCustomers);
             }
             else
             {
                 return NotFound();
             }
         }
+
+
     }
 }

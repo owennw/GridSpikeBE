@@ -155,6 +155,7 @@
     <Compile Include="Hubs\CustomerHub.cs" />
     <Compile Include="Hubs\FilteredCamelCasePropertyNamesContractResolver.cs" />
     <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\IEntity.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Purchase.cs" />
     <Compile Include="Models\PurchaseItem.cs" />

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ShoppingApp.Models
 {
-    public class Customer
+    public class Customer: IEntity
     {
         public virtual int Id { get; set; }
 

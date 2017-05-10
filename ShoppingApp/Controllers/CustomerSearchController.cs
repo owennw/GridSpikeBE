@@ -8,28 +8,6 @@ using System.Web.Http;
 
 namespace ShoppingApp.Controllers
 {
-    public class QueryManager<T> where T : IEntity
-    {
-        private IDictionary<string, string> queryDict;
-
-        public QueryManager(IDictionary<string, string> queryDict)
-        {
-            this.queryDict = queryDict;
-            this.Queries = new List<Func<IEnumerable<T>, IEnumerable<T>>>();
-        }
-
-        public IList<Func<IEnumerable<T>, IEnumerable<T>>> Queries { get; private set; }
-
-        public void Add(string key, Func<T, string> selector)
-        {
-            string value = null;
-            if (this.queryDict.TryGetValue(key, out value))
-            {
-                this.Queries.Add(cs => cs.Where(c => selector(c).ToLowerInvariant().Contains(value.ToLowerInvariant())));
-            }
-        }
-    }
-
     public class CustomerSearchController : ApiController
     {
         private IRepository<Customer> repository;
@@ -58,7 +36,7 @@ namespace ShoppingApp.Controllers
 
             foreach (var query in queryManager.Queries)
             {
-                filteredCustomers = query(filteredCustomers);
+                filteredCustomers = query.Run(filteredCustomers);
             }
 
             return Ok(filteredCustomers);

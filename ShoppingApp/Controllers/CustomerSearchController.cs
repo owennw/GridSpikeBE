@@ -1,4 +1,5 @@
 ﻿using ShoppingApp.Models;
+using ShoppingApp.Queries;
 using ShoppingApp.Repositories;
 using System;
 using System.Collections.Generic;
@@ -23,11 +24,6 @@ namespace ShoppingApp.Controllers
             var queryDict = this.Request.GetQueryNameValuePairs().ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
 
             var queryManager = new QueryManager<Customer>(queryDict);
-
-            queryManager.Add("first_name", c => c.FirstName);
-            queryManager.Add("last_name", c => c.LastName);
-            queryManager.Add("city", c => c.City);
-            queryManager.Add("email_address", c => c.EmailAddress);
 
             var allCustomers = this.repository.GetAll()
                 .Distinct();

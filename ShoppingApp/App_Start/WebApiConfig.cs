@@ -27,6 +27,7 @@ namespace ShoppingApp
             config.Count().Filter().OrderBy().Expand().Select().MaxTop(5);
             builder.EntitySet<Customer>("Customers");
             builder.EntitySet<Product>("Products");
+            builder.EntitySet<PurchaseItem>("PurchaseItems");
             config.MapODataServiceRoute(
                 routeName: "ODataRoute",
                 routePrefix: null,

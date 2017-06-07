@@ -19,7 +19,7 @@ namespace ShoppingApp.Controllers
             var queryManager = new QueryManager<Customer>(queryDict);
 
             var unitOfWork = new UnitOfWork();
-            var repo = new CustomerRepository(unitOfWork);
+            var repo = new Repository<Customer>(unitOfWork);
 
             var allCustomers = repo.GetAll();
 

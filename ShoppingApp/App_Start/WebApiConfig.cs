@@ -14,8 +14,6 @@ namespace ShoppingApp
     {
         public static void Register(HttpConfiguration config)
         {
-            // Web API configuration and services
-
             var cors = new EnableCorsAttribute("http://localhost:8080", "*", "*");
             //cors.SupportsCredentials = true;
             config.EnableCors(cors);
@@ -23,15 +21,7 @@ namespace ShoppingApp
             // Web API routes
             config.MapHttpAttributeRoutes();
 
-            ODataModelBuilder builder = new ODataConventionModelBuilder();
-            config.Count().Filter().OrderBy().Expand().Select().MaxTop(5);
-            builder.EntitySet<Customer>("Customers");
-            builder.EntitySet<Product>("Products");
-            builder.EntitySet<PurchaseItem>("PurchaseItems");
-            config.MapODataServiceRoute(
-                routeName: "ODataRoute",
-                routePrefix: null,
-                model: builder.GetEdmModel());
+            ConfigureOData(config);
 
             config.EnableDependencyInjection();
             config.EnsureInitialized();
@@ -45,6 +35,27 @@ namespace ShoppingApp
             config.Formatters.Clear();
             config.Formatters.Add(new JsonMediaTypeFormatter());
 
+            ConfigureJsonFormatter(config);
+        }
+
+        private static void ConfigureOData(HttpConfiguration config)
+        {
+            ODataModelBuilder builder = new ODataConventionModelBuilder();
+
+            config.Count().Filter().OrderBy().Expand().Select().MaxTop(5);
+
+            builder.EntitySet<Customer>("Customers");
+            builder.EntitySet<Product>("Products");
+            builder.EntitySet<PurchaseItem>("PurchaseItems");
+
+            config.MapODataServiceRoute(
+                routeName: "ODataRoute",
+                routePrefix: null,
+                model: builder.GetEdmModel());
+        }
+
+        private static void ConfigureJsonFormatter(HttpConfiguration config)
+        {
             var jsonFormatter = config.Formatters.JsonFormatter;
             jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             jsonFormatter.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;

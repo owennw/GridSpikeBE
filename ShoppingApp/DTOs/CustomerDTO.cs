@@ -13,6 +13,7 @@ namespace ShoppingApp.DTOs
             this.EmailAddress = customer.EmailAddress;
             this.Purchases = customer.Purchases;
             this.FavouriteFood = customer.FavouriteFood;
+            this.FavouriteFoodName = customer.FavouriteFood?.Name;
         }
 
         public string FirstName { get; private set; }
@@ -26,5 +27,7 @@ namespace ShoppingApp.DTOs
         public string City { get; private set; }
 
         public Product FavouriteFood { get; private set; }
+
+        public string FavouriteFoodName { get; private set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Ninject.Modules;
+using ShoppingApp.DTOs;
 using ShoppingApp.Models;
 using ShoppingApp.Repositories;
 using System;
@@ -8,23 +9,27 @@ using System.Web.OData;
 
 namespace ShoppingApp.Controllers
 {
-    public class GenericController<T> : ApiController
+    public class GenericController<T, TDTO> : ApiController
         where T : IEntity
+        where TDTO : IEntityDTO
     {
         private IUnitOfWork unitOfWork;
 
         private Repository<T> repository;
 
-        public GenericController(IUnitOfWork unitOfWork)
+        private Func<T, TDTO> convertToDTO;
+
+        public GenericController(IUnitOfWork unitOfWork, Func<T, TDTO> convertToDTO)
         {
             this.unitOfWork = unitOfWork;
             this.repository = new Repository<T>(unitOfWork);
+            this.convertToDTO = convertToDTO;
         }
 
         [EnableQuery]
-        public IQueryable<T> Get()
+        public IQueryable<TDTO> Get()
         {
-            return this.repository.GetAll();
+            return this.repository.GetAll().Select(e => convertToDTO(e));
         }
 
         public IHttpActionResult GetById(int id)

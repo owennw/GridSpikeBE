@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ShoppingApp.DTOs
 {
-    interface IEntityDTO
+    public interface IEntityDTO
     {
         [Key]
         int Id { get; }

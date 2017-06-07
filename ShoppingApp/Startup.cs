@@ -1,9 +1,13 @@
 ﻿using Microsoft.AspNet.SignalR;
 using Microsoft.Owin.Cors;
 using Newtonsoft.Json;
+using Ninject;
+using Ninject.Web.Common.OwinHost;
+using Ninject.Web.WebApi.OwinHost;
 using Owin;
 using ShoppingApp.Hubs;
 using System;
+using System.Reflection;
 using System.Web.Http;
 
 namespace ShoppingApp
@@ -20,7 +24,8 @@ namespace ShoppingApp
             HttpConfiguration config = new HttpConfiguration();
 
             WebApiConfig.Register(config);
-            app.UseWebApi(config);
+
+            app.UseNinjectMiddleware(CreateKernel).UseNinjectWebApi(config);
 
             app.MapSignalR(new HubConfiguration { EnableDetailedErrors = true });
 
@@ -45,6 +50,13 @@ namespace ShoppingApp
                     //                }
                 }
             };
+        }
+
+        private static StandardKernel CreateKernel()
+        {
+            var kernel = new StandardKernel();
+            kernel.Load(Assembly.GetExecutingAssembly());
+            return kernel;
         }
     }
 }

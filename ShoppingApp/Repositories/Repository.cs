@@ -8,6 +8,14 @@ using System.Web;
 
 namespace ShoppingApp.Repositories
 {
+    public interface IRepository<T> where T : IEntity
+    {
+        IQueryable<T> GetAll();
+        T GetById(int id);
+        void Add(T entity);
+        void Delete(T entity);
+    }
+
     public class Repository<T> : IRepository<T>
         where T : IEntity
     {

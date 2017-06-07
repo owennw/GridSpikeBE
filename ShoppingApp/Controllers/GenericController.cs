@@ -1,4 +1,5 @@
-﻿using ShoppingApp.Models;
+﻿using Ninject.Modules;
+using ShoppingApp.Models;
 using ShoppingApp.Repositories;
 using System;
 using System.Linq;
@@ -12,23 +13,23 @@ namespace ShoppingApp.Controllers
     {
         private IUnitOfWork unitOfWork;
 
-        public GenericController()
+        private Repository<T> repository;
+
+        public GenericController(IUnitOfWork unitOfWork)
         {
-            this.unitOfWork = new UnitOfWork();
+            this.unitOfWork = unitOfWork;
+            this.repository = new Repository<T>(unitOfWork);
         }
 
         [EnableQuery]
         public IQueryable<T> Get()
         {
-            var repo = new Repository<T>(this.unitOfWork);
-            return repo.GetAll();
+            return this.repository.GetAll();
         }
 
         public IHttpActionResult GetById(int id)
         {
-            var repo = new Repository<T>(this.unitOfWork);
-
-            var entity = repo.GetById(id);
+            var entity = this.repository.GetById(id);
             if (entity == null)
             {
                 return NotFound();
@@ -42,9 +43,7 @@ namespace ShoppingApp.Controllers
         {
             try
             {
-                var repo = new Repository<T>(this.unitOfWork);
-
-                repo.Add(entity);
+                this.repository.Add(entity);
 
                 return Ok(entity);
             }
@@ -58,9 +57,7 @@ namespace ShoppingApp.Controllers
         {
             try
             {
-                var repo = new Repository<T>(this.unitOfWork);
-
-                repo.Delete(entity);
+                this.repository.Delete(entity);
 
                 return Ok(entity);
             }

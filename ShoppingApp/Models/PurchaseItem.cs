@@ -7,38 +7,33 @@
         public virtual Product Product { get; set; }
         public virtual int Quantity { get; set; }
 
-        public decimal Price
-        {
-            get { return this.Product.Price * this.Quantity; }
-        }
+        //public override bool Equals(object obj)
+        //{
+        //    var other = obj as PurchaseItem;
 
-        public override bool Equals(object obj)
-        {
-            var other = obj as PurchaseItem;
+        //    if (ReferenceEquals(null, other))
+        //    {
+        //        return false;
+        //    }
 
-            if (ReferenceEquals(null, other))
-            {
-                return false;
-            }
+        //    if (ReferenceEquals(this, other))
+        //    {
+        //        return true;
+        //    }
 
-            if (ReferenceEquals(this, other))
-            {
-                return true;
-            }
+        //    return this.Purchase == other.Purchase && this.Product == other.Product;
+        //}
 
-            return this.Purchase == other.Purchase && this.Product == other.Product;
-        }
+        //public override int GetHashCode()
+        //{
+        //    unchecked
+        //    {
+        //        int hash = GetType().GetHashCode();
+        //        hash = (hash * 31) ^ Purchase.GetHashCode();
+        //        hash = (hash * 31) ^ Product.GetHashCode();
 
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                int hash = GetType().GetHashCode();
-                hash = (hash * 31) ^ Purchase.GetHashCode();
-                hash = (hash * 31) ^ Product.GetHashCode();
-
-                return hash;
-            }
-        }
+        //        return hash;
+        //    }
+        //}
     }
 }

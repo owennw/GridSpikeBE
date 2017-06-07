@@ -1,6 +1,8 @@
-﻿using ShoppingApp.Models;
+﻿using ShoppingApp.DTOs;
+using ShoppingApp.Models;
 using ShoppingApp.Repositories;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Serialization;
 using System.Web.Http;
 
@@ -9,21 +11,20 @@ namespace ShoppingApp.Controllers
     [DataContract(IsReference = true)]
     public class PurchasesController : ApiController
     {
-        private IRepository<Purchase> repository;
-
-        public PurchasesController()
+        public IQueryable<Purchase> GetAllPurchases()
         {
-            this.repository = new PurchaseRepository();
-        }
+            var unitOfWork = new UnitOfWork();
+            var repo = new Repository<Purchase>(unitOfWork);
 
-        public IEnumerable<Purchase> GetAllPurchases()
-        {
-            return this.repository.GetAll();
+            return repo.GetAll(); //.Select(p => new PurchaseDTO(p)); ;
         }
 
         public IHttpActionResult GetPurchase(int id)
         {
-            var purchase = this.repository.GetById(id);
+            var unitOfWork = new UnitOfWork();
+            var repo = new Repository<Purchase>(unitOfWork);
+
+            var purchase = repo.GetById(id);
             if (purchase == null)
             {
                 return NotFound();

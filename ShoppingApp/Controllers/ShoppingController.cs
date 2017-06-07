@@ -1,4 +1,5 @@
-﻿using ShoppingApp.Models;
+﻿using ShoppingApp.DTOs;
+using ShoppingApp.Models;
 using ShoppingApp.Repositories;
 using System;
 using System.Collections.Generic;
@@ -18,19 +19,16 @@ namespace ShoppingApp.Controllers
 
     public class ShoppingController : ApiController
     {
-        private IRepository<Purchase> purchaseRepository;
-        private IRepository<PurchaseItem> purchaseItemRepository;
-
-        public ShoppingController()
-        {
-            this.purchaseRepository = new PurchaseRepository();
-            this.purchaseItemRepository = new PurchaseItemRepository();
-        }
-
         public IEnumerable<Shopping> GetAllShopping()
         {
-            var purchases = this.purchaseRepository.GetAll().Distinct(); // Distinct hack
-            var allPurchaseItems = this.purchaseItemRepository.GetAll();
+            var unitOfWork = new UnitOfWork();
+            var purchaseRepo = new Repository<Purchase>(unitOfWork);
+
+            IEnumerable<Purchase> purchases = purchaseRepo.GetAll();
+
+            var purchaseItemRepo = new Repository<PurchaseItem>(unitOfWork);
+
+            var allPurchaseItems = purchaseItemRepo.GetAll();
 
             return purchases.Select(p =>
             {

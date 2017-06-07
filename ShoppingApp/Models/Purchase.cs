@@ -9,7 +9,7 @@ namespace ShoppingApp.Models
         public virtual Customer Customer { get; set; }
         public virtual DateTime Date { get; set; }
 
-        public virtual IList<PurchaseItem> PurchaseItems { get; set; }
+        public virtual IEnumerable<PurchaseItem> PurchaseItems { get; set; }
 
         public override string ToString()
         {

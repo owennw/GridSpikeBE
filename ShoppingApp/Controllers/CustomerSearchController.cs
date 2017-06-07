@@ -1,7 +1,7 @@
-﻿using ShoppingApp.Models;
+﻿using ShoppingApp.DTOs;
+using ShoppingApp.Models;
 using ShoppingApp.Queries;
 using ShoppingApp.Repositories;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -11,13 +11,6 @@ namespace ShoppingApp.Controllers
 {
     public class CustomerSearchController : ApiController
     {
-        private IRepository<Customer> repository;
-
-        public CustomerSearchController()
-        {
-            this.repository = new CustomerRepository();
-        }
-
         [HttpGet]
         public IHttpActionResult Search()
         {
@@ -25,17 +18,19 @@ namespace ShoppingApp.Controllers
 
             var queryManager = new QueryManager<Customer>(queryDict);
 
-            var allCustomers = this.repository.GetAll()
-                .Distinct();
+            var unitOfWork = new UnitOfWork();
+            var repo = new CustomerRepository(unitOfWork);
 
-            var filteredCustomers = allCustomers;
+            var allCustomers = repo.GetAll();
+
+            IEnumerable<Customer> filteredCustomers = allCustomers;
 
             foreach (var query in queryManager.Queries)
             {
                 filteredCustomers = query.Run(filteredCustomers);
             }
 
-            return Ok(filteredCustomers);
+            return Ok(filteredCustomers); //.Select(c => new CustomerDTO(c)));
         }
     }
 }

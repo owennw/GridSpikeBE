@@ -1,8 +1,12 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using ShoppingApp.DTOs;
+using ShoppingApp.Models;
 using System.Net.Http.Formatting;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using System.Web.OData.Builder;
+using System.Web.OData.Extensions;
 
 namespace ShoppingApp
 {
@@ -18,6 +22,18 @@ namespace ShoppingApp
 
             // Web API routes
             config.MapHttpAttributeRoutes();
+
+            ODataModelBuilder builder = new ODataConventionModelBuilder();
+            config.Count().Filter().OrderBy().Expand().Select().MaxTop(5);
+            builder.EntitySet<Customer>("Customers");
+            builder.EntitySet<Product>("Products");
+            config.MapODataServiceRoute(
+                routeName: "ODataRoute",
+                routePrefix: null,
+                model: builder.GetEdmModel());
+
+            config.EnableDependencyInjection();
+            config.EnsureInitialized();
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",

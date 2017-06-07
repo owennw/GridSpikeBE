@@ -1,29 +1,29 @@
-﻿using ShoppingApp.Models;
+﻿using ShoppingApp.DTOs;
+using ShoppingApp.Models;
 using ShoppingApp.Repositories;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using System.Web.OData;
 
 namespace ShoppingApp.Controllers
 {
     public class CustomersController : ApiController
     {
-        private IRepository<Customer> repository;
-
-        public CustomersController()
+        [EnableQuery]
+        public IQueryable<Customer> GetAllCustomers()
         {
-            this.repository = new CustomerRepository();
-        }
-
-        public IEnumerable<Customer> GetAllCustomers()
-        {
-            return this.repository.GetAll().Distinct(); // Distinct hack?
+            var unitOfWork = new UnitOfWork();
+            var repo = new CustomerRepository(unitOfWork);
+            return repo.GetAll(); //.Select(c => new CustomerDTO(c));
         }
 
         public IHttpActionResult GetCustomer(int id)
         {
-            var customer = this.repository.GetById(id);
+            var unitOfWork = new UnitOfWork();
+            var repo = new CustomerRepository(unitOfWork);
+
+            var customer = repo.GetById(id);
             if (customer == null)
             {
                 return NotFound();
@@ -37,7 +37,9 @@ namespace ShoppingApp.Controllers
         {
             try
             {
-                this.repository.Add(customer);
+                var unitOfWork = new UnitOfWork();
+                var repo = new CustomerRepository(unitOfWork);
+                repo.Add(customer);
 
                 return Ok(customer);
             }
@@ -51,7 +53,10 @@ namespace ShoppingApp.Controllers
         {
             try
             {
-                this.repository.Delete(customer);
+                var unitOfWork = new UnitOfWork();
+                var repo = new CustomerRepository(unitOfWork);
+
+                repo.Delete(customer);
 
                 return Ok(customer);
             }

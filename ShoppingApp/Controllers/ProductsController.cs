@@ -1,27 +1,28 @@
-﻿using ShoppingApp.Models;
+﻿using ShoppingApp.DTOs;
+using ShoppingApp.Models;
 using ShoppingApp.Repositories;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Http;
+using System.Web.OData;
 
 namespace ShoppingApp.Controllers
 {
     public class ProductsController : ApiController
     {
-        private IRepository<Product> repository;
-
-        public ProductsController()
+        [EnableQuery]
+        public IQueryable<Product> GetAllProducts()
         {
-            this.repository = new ProductRepository();
-        }
-
-        public IEnumerable<Product> GetAllProducts()
-        {
-            return this.repository.GetAll();
+            var unitOfWork = new UnitOfWork();
+            var repo = new Repository<Product>(unitOfWork);
+            return repo.GetAll(); //.Select(p => new ProductDTO(p));
         }
 
         public IHttpActionResult GetProduct(int id)
         {
-            var product = this.repository.GetById(id);
+            var unitOfWork = new UnitOfWork();
+            var repo = new Repository<Product>(unitOfWork);
+            var product = repo.GetById(id);
             if (product == null)
             {
                 return NotFound();

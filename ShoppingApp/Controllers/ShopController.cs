@@ -1,4 +1,5 @@
-﻿using ShoppingApp.Models;
+﻿using ShoppingApp.DTOs;
+using ShoppingApp.Models;
 using ShoppingApp.Repositories;
 using System;
 using System.Collections.Generic;
@@ -16,31 +17,27 @@ namespace ShoppingApp.Controllers
 
     public class ShopController : ApiController
     {
-        private IRepository<Purchase> purchaseRepository;
-        private IRepository<PurchaseItem> purchaseItemRepository;
-
-        public ShopController()
-        {
-            this.purchaseRepository = new PurchaseRepository();
-            this.purchaseItemRepository = new PurchaseItemRepository();
-        }
-
         public IHttpActionResult GetShop(int id)
         {
-            var purchase = this.purchaseRepository.GetById(id);
+            var unitOfWork = new UnitOfWork();
+            var purchaseRepo = new Repository<Purchase>(unitOfWork);
+
+            var purchase = purchaseRepo.GetById(id);
 
             if (purchase == null)
             {
                 return NotFound();
             }
 
-            var allPurchaseItems = this.purchaseItemRepository.GetAll().Where(pi => pi.Purchase.Id == id);
+            var purchaseItemRepo = new Repository<PurchaseItem>(unitOfWork);
+
+            var allPurchaseItems = purchaseItemRepo.GetAll().Where(pi => pi.Purchase.Id == id);
 
             return Ok(new Shop
             {
                 Customer = purchase.Customer,
                 Date = purchase.Date,
-                Products = allPurchaseItems
+                Products = allPurchaseItems //.Select(p => new PurchaseItemDTO(p))
             });
         }
     }

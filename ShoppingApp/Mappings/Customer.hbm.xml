@@ -3,7 +3,7 @@
                    assembly="ShoppingApp"
                    namespace="ShoppingApp.Models"
 >
-  <class name="Customer" lazy="false">
+  <class name="Customer">
     <id name="Id">
       <generator class="increment" />
     </id>
@@ -12,7 +12,7 @@
     <property name="EmailAddress" column="email_address" />
     <property name="City" />
     <many-to-one name="FavouriteFood" column="favourite_food_id" lazy="false" />
-    <bag name="Purchases" table="purchase" lazy="false" inverse="true" cascade="all-delete-orphan">
+    <bag name="Purchases" table="purchase" inverse="true" cascade="all-delete-orphan">
       <key column="customer_id" />
       <one-to-many class="Purchase" />
     </bag>
